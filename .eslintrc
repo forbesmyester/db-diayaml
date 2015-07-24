@@ -1,0 +1,16 @@
+{
+    "env": {
+        "node": true,
+    },
+    "globals": {
+        "Promise": true
+    },
+    "rules": {
+        "quotes": 0,
+        "camelcase": 0,
+        "no-underscore-dangle": 0,
+        "no-unused-vars": 1,
+        "no-mixed-requires": 0,
+        "eqeqeq": 0
+    }
+}
