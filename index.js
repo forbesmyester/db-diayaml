@@ -5,7 +5,8 @@
 var lib = require('./lib'),
     cliArgs = require("command-line-args"),
     R = require('ramda'),
-    fs = require('fs');
+    fs = require('fs'),
+    yaml = require('js-yaml');
 
 /* define the command-line options */
 var cli = cliArgs([
@@ -32,12 +33,6 @@ if (
     process.exit(0);
 }
 
-if (!options.json) {
-    console.log("ERROR: Only JSON is currently supported!");
-    console.log(usage);
-    process.exit(0);
-}
-
 if (R.any(
     function(f) { return !fs.existsSync(f); },
     options.file
@@ -49,11 +44,15 @@ if (R.any(
 
 var json = {};
 try {
-    json = JSON.parse(
-        fs.readFileSync(options.file[0])
-    );
+    if (options.json) {
+        json = JSON.parse(
+            fs.readFileSync(options.file[0])
+        );
+    } else {
+        json = yaml.safeLoad(fs.readFileSync(options.file[0]));
+    }
 } catch (e) {
-    console.log("ERROR: Invalid JSON");
+    console.log("ERROR: Invalid " + (options.json ? "JSON" : "YAML"));
     process.exit(2);
 }
 
