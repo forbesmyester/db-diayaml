@@ -1,25 +1,25 @@
-# DiaYAML
+# DB DiaYAML - A simple way to plan database schemas
 
 Draw database diagrams using GraphViz / DOT from a very simple YAML file.
 
 ## Example YAML File
 
 ``` yaml
-    person: # A Table
-        name: # A Field
-    address:
-        line1:
-        line2:
-        person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
-        link: person
-    order:
-        address: address # Shorter version of a foreign key
-    a:
-        letter:
-            link: person.name # A foreign key to a specific field
-    b:
-        id:
-        something:
+person: # A Table
+    name: # A Field
+address:
+    line1:
+    line2:
+    person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
+    link: person
+order:
+    address: address # Shorter version of a foreign key
+a:
+    letter:
+        link: person.name # A foreign key to a specific field
+b:
+    id:
+    something:
 ```
 
 ## Example Output

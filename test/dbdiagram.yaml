@@ -1,3 +1,9 @@
+# DB DiaYAML - A simple way to plan database schemas
+#
+# Draw database diagrams using GraphViz / DOT from a very simple YAML file.
+#
+# See sample file below!
+
 person: # A Table
     name: # A Field
 address:
