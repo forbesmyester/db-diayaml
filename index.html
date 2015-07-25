@@ -19,6 +19,7 @@
     left: 50%;
     width: 50%;
     background-color: #DDD;
+    overflow: scroll;
   }
   svg {
     display: block;
@@ -28,20 +29,20 @@
 </head>
 <body>
 
-<div id="editor">person:
-  name:
+<div id="editor">person: # A Table
+  name: # A Field
 address:
   line1:
   line2:
-  person:
+  person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
     link: person
 order:
-  address:
-    link: address
+  address: address # Shorter version of a foreign key
 a:
   letter:
-    link: person.name
+    link: person.name # A foreign key to a specific field
 b:
+  id:
   something:</div>
 <div id="diagram"></div>
 

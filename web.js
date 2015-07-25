@@ -20,7 +20,7 @@ function redraw() {
     }
     /* eslint new-cap: 0 */
     document.getElementById("diagram").innerHTML = Viz(
-        lib.getDotSrc(json).join("\n"),
+        lib.getDotSrc(lib.transform(json)).join("\n"),
         "svg"
     );
 }

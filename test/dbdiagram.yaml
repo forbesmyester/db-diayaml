@@ -1,15 +1,16 @@
-person:
-  name:
+person: # A Table
+    name: # A Field
 address:
-  line1:
-  line2:
-  person:
+    line1:
+    line2:
+    person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
     link: person
 order:
-  address:
-    link: address
+    address: address # Shorter version of a foreign key
 a:
-  letter:
-    link: person.name
+    letter:
+        link: person.name # A foreign key to a specific field
 b:
-  something:
+    id:
+    something:
+

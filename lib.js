@@ -75,10 +75,28 @@ function getDotSrc(struct) {
     ]);
 }
 
+function transform1(struct) {
+    return R.mapObjIndexed(function(table) {
+        return R.mapObjIndexed(function(field) {
+            if (typeof field == 'string') {
+                return { link: field };
+            }
+            return field;
+        }, table);
+    }, struct);
+}
+
+function transform(struct) {
+    return transform1(struct);
+}
+
+transform.transform1 = transform1;
+
 module.exports = {
     writeTable: writeTable,
     addLinkFields: addLinkFields,
     findLinks: findLinks,
     writeLink: writeLink,
-    getDotSrc: getDotSrc
+    getDotSrc: getDotSrc,
+    transform: transform
 };

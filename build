@@ -1,0 +1,4 @@
+#!/bin/bash
+webpack
+uglifyjs web.webpack.js > web.bin.js
+rm web.webpack.js

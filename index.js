@@ -56,4 +56,4 @@ try {
     process.exit(2);
 }
 
-console.log(lib.getDotSrc(json).join("\n"));
+console.log(lib.getDotSrc(lib.transform(json)).join("\n"));

@@ -2,17 +2,25 @@
 
 Draw database diagrams using GraphViz / DOT from a very simple YAML file.
 
-## Example JSON File
+## Example YAML File
 
-    {
-        "person": { "name": null },
-        "address": { "line1": null, "line2": null, "person": { "link": "person"} },
-        "order": {
-            "address": { "link": "address" }
-        },
-        "a": { "letter": { "link": "person.name" } },
-        "b": { "something": null }
-    }
+``` yaml
+    person: # A Table
+        name: # A Field
+    address:
+        line1:
+        line2:
+        person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
+        link: person
+    order:
+        address: address # Shorter version of a foreign key
+    a:
+        letter:
+            link: person.name # A foreign key to a specific field
+    b:
+        id:
+        something:
+```
 
 ## Example Output
 
@@ -32,7 +40,7 @@ Draw database diagrams using GraphViz / DOT from a very simple YAML file.
   
     YAML Usage:
   
-      node index.js dbdiagram.yml | dot -Gdpi=64 -Tpng:cairo:cairo > bin/dbdiagram.png && display.im6 bin/dbdiagram.png
+      node index.js test/dbdiagram.yaml | dot -Gdpi=64 -Tpng:cairo:cairo > bin/dbdiagram.png && display.im6 bin/dbdiagram.png
   
     JSON Usage:
   

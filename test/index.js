@@ -47,6 +47,16 @@ describe('lib', function() {
         );
     });
 
+    it('can do a series of transforms', function() {
+        expect(lib.transform.transform1({
+            person: { name: null },
+            b: { something: "person" }
+        })).to.eql({
+            person: { name: null },
+            b: { something: { link: "person" } }
+        });
+    });
+
     it('can writeDatabase', function() {
         var expected = [
             'digraph db {',

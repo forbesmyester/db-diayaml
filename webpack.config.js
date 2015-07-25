@@ -14,7 +14,7 @@ module.exports = {
     },
     lazy: true,
     output: {
-        filename: "web.bin.js",
+        filename: "web.webpack.js"
     },
     devtool: "inline-source-map"
 };
