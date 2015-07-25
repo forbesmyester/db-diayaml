@@ -29,6 +29,13 @@ if (
     console.log(usage);
     process.exit(0);
 }
+
+if (!options.json) {
+    console.log("ERROR: Only JSON is currently supported!");
+    console.log(usage);
+    process.exit(0);
+}
+
 if (R.any(
     function(f) { return !fs.existsSync(f); },
     options.file
