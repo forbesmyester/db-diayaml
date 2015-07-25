@@ -12,7 +12,13 @@ function writeTable(tabledata, tablename) {
         "|",
         R.map(
             R.partial(writeSubGraphField, tablename),
-            R.keys(tabledata)
+            R.sortBy(
+                function(n) {
+                    if (n == 'id') { return 'a' + n; }
+                    return 'b' + n;
+                },
+                R.keys(tabledata)
+            )
         )
     );
     lines.push('  label = "' + tablename + '";');

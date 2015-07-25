@@ -36,7 +36,7 @@ describe('lib', function() {
         expect(lib.writeTable(s.person, 'person')).to.eql([
             'subgraph clusterperson {',
             '  label = "person";',
-            '  structperson [label="{<person__name>name|<person__id>id}",shape=record];',
+            '  structperson [label="{<person__id>id|<person__name>name}",shape=record];',
             '}'
         ]);
     });
@@ -52,7 +52,7 @@ describe('lib', function() {
             'digraph db {',
             'subgraph clusterperson {',
             '  label = "person";',
-            '  structperson [label="{<person__name>name|<person__id>id}",shape=record];',
+            '  structperson [label="{<person__id>id|<person__name>name}",shape=record];',
             '}',
             'subgraph clusterorder {',
             '  label = "order";',
