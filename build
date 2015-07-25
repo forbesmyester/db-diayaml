@@ -7,4 +7,5 @@ git checkout gh-pages
 mv ../index.html ../web.bin.js ./
 git add index.html web.bin.js
 git commit -m 'relaunch gh-pages'
+git push
 git checkout master
