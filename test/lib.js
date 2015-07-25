@@ -1,8 +1,7 @@
 "use strict";
 
 var expect = require('expect.js'),
-    lib = require('../lib.js'),
-    fs = require('fs');
+    lib = require('../lib.js');
 
 var sample1 = {
     person: { name: null },
@@ -82,11 +81,7 @@ describe('lib', function() {
         ];
 
         expect(lib.getDotSrc(sample1)).to.eql(expected);
-        fs.writeFileSync(
-            'dbdiagram.dot',
-            lib.getDotSrc(sample1).join("\n"),
-            { encoding: 'utf8' }
-        );
+
     });
 });
 
