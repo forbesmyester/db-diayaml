@@ -2,6 +2,10 @@
 
 Draw database diagrams using GraphViz / DOT from a very simple YAML file.
 
+## Live (Mini) Web Service
+
+There is a live editing available at [http://forbesmyester.github.io/db-diayaml/](http://forbesmyester.github.io/db-diayaml/). It does not save any code anywhere so make sure to copy & paste into [VIM](http://www.vim.org/) or something.
+
 ## Example YAML File
 
 ``` yaml
