@@ -1,0 +1,9 @@
+{
+    "person": { "name": null },
+    "address": { "line1": null, "line2": null, "person": { "link": "person"} },
+    "order": {
+        "address": { "link": "address" }
+    },
+    "a": { "letter": { "link": "person.name" } },
+    "b": { "something": null }
+}
