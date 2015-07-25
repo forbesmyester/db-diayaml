@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "eslint test/index.js && test index.js && mocha test/index.js"
+    "test": "eslint test/*.js && eslint index.js web.js lib.js && mocha test/*.js"
   },
   "author": "Matthew Forrester <github@speechmarks.com>",
   "license": "MIT",
