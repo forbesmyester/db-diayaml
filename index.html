@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DB DiaYAML</title>
+<style type="text/css" media="screen">
+  #editor { 
+    position: absolute;
+    top: 0;
+    right: 50%;
+    width: 50%;
+    bottom: 0;
+    left: 0;
+  }
+  #diagram {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    width: 50%;
+    background-color: #DDD;
+  }
+  svg {
+    display: block;
+    margin: auto;
+  }
+</style>
+</head>
+<body>
+
+<div id="editor">person:
+  name:
+address:
+  line1:
+  line2:
+  person:
+    link: person
+order:
+  address:
+    link: address
+a:
+  letter:
+    link: person.name
+b:
+  something:</div>
+<div id="diagram"></div>
+
+<script src="//cdn.jsdelivr.net/ace/1.2.0/min/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="//mdaines.github.io/viz.js/viz.js" type="text/javascript"></script>
+<script src="//nodeca.github.io/js-yaml/js/esprima.js"></script>
+<script src="//nodeca.github.io/js-yaml/js/js-yaml.js"></script>
+<script src="/web.bin.js" type="text/javascript"></script>
+
+</body>
+</html>

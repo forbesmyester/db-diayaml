@@ -1,6 +1,6 @@
 "use strict";
 
-var R = require('ramda');
+var R = require('require-parts')('ramda', 'src', ["partial", "map", "sortBy", "keys", "mapObjIndexed", "concat", "values", "assocPath", "reduce", "slice", "path", "defaultTo", "join", "flatten"]);
 
 function writeSubGraphField(tablename, fieldname) {
     return "<" + tablename + "__" + fieldname + ">" + fieldname;
