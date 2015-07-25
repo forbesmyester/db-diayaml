@@ -1,5 +1,7 @@
 "use strict";
 
+/* eslint no-process-exit: 0 */
+
 var lib = require('./lib'),
     cliArgs = require("command-line-args"),
     R = require('ramda'),
