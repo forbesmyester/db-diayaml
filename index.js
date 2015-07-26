@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 
 /* eslint no-process-exit: 0 */
