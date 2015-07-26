@@ -64,15 +64,11 @@ function writeLink(linkSpec) {
 
 function getDotSrc(struct) {
     var finalStruct = addLinkFields(struct);
-        // console.log(
-        // R.map(writeLink, findLinks(finalStruct))
-        // );
-    return R.flatten([
-        'digraph db {',
+    var inner = R.map(function(s) { return "  " + s; }, R.flatten([
         R.values(R.mapObjIndexed(writeTable, finalStruct)),
-        R.map(writeLink, findLinks(finalStruct)),
-        '}'
-    ]);
+        R.map(writeLink, findLinks(finalStruct))
+    ]));
+    return R.flatten(['digraph db {', inner, '}']);
 }
 
 function transform1(struct) {
