@@ -11,12 +11,12 @@ editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/yaml");
 
 function redraw() {
-    console.log("redraw");
     var json = {};
     try {
         json = jsyaml.safeLoad(editor.getValue());
     } catch (e) {
-        console.log("Error reading YAML");
+        document.getElementById("diagram").innerHTML = '<div class="error"><h2>Error</h2><p>Your YAML does not appear to be valid</p></div>';
+        return;
     }
     /* eslint new-cap: 0 */
     document.getElementById("diagram").innerHTML = Viz(
