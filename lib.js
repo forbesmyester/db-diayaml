@@ -12,10 +12,11 @@ function writeTable(tabledata, tablename) {
         "|",
         R.map(
             R.partial(writeSubGraphField, tablename),
-            R.sortBy(
-                function(n) {
-                    if (n == 'id') { return 'a' + n; }
-                    return 'b' + n;
+            R.sort(
+                function(a, b) {
+                    if (a == 'id') { return -1; }
+                    if (b == 'id') { return 1; }
+                    return 0;
                 },
                 R.keys(tabledata)
             )
