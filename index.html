@@ -44,21 +44,9 @@
 #
 # See sample file below!
 
-person: # A Table
-  name: # A Field
-address:
-  line1:
-  line2:
-  person: # Link adds a foreign key (missing field implies `id`, will be added if not already existing!)
-    link: person
-order:
-  address: address # Shorter version of a foreign key
-a:
-  letter:
-    link: person.name # A foreign key to a specific field
-b:
-  id:
-  something:
+digraph db {
+  a -> b
+}
 
 # Developed by [Forbesmyester](http://keyboardwritescode.blogspot.co.uk/).
 # Blogged about [at Blogger](http://keyboardwritescode.blogspot.co.uk/2015/07/weekend-project-db-diayaml.html).
