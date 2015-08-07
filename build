@@ -1,13 +1,15 @@
 #!/bin/bash
 webpack
 uglifyjs web.webpack.js > web.bin.js
-git add web.bin.js
-git commit -m 'js binary'
-rm web.webpack.js
-cp index.html web.bin.js ..
-git checkout gh-pages
-mv ../index.html ../web.bin.js ./
-git add index.html web.bin.js
-git commit -m 'relaunch gh-pages'
-git push
-git checkout master
+if [[ "$1" == "web" ]]; then
+    git add web.bin.js
+    git commit -m 'js binary'
+    rm web.webpack.js
+    cp index.html web.bin.js ..
+    git checkout gh-pages
+    mv ../index.html ../web.bin.js ./
+    git add index.html web.bin.js
+    git commit -m 'relaunch gh-pages'
+    git push
+    git checkout master
+fi
