@@ -7,6 +7,7 @@ if [[ "$1" == "web" ]]; then
     rm web.webpack.js
     cp index.html web.bin.js ..
     git checkout gh-pages
+    git pull
     mv ../index.html ../web.bin.js ./
     git add index.html web.bin.js
     git commit -m 'relaunch gh-pages'
