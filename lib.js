@@ -95,6 +95,7 @@ function getDotSrc(struct) {
         R.values(R.mapObjIndexed(writeTable, finalStruct)),
         R.map(writeLink, findLinks(finalStruct))
     ]));
+    // inner.unshift('nodesep = 1;');
     return R.flatten(['digraph db {', inner, '}']);
 }
 
