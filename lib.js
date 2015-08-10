@@ -1,6 +1,6 @@
 "use strict";
 
-var R = require('require-parts')('ramda', 'src', ["partial", "map", "sortBy", "keys", "mapObjIndexed", "concat", "values", "assocPath", "reduce", "slice", "path", "defaultTo", "join", "flatten"]);
+var R = require('require-parts')('ramda', 'src', ["partial", "map", "sort", "keys", "mapObjIndexed", "concat", "values", "assocPath", "reduce", "slice", "path", "defaultTo", "join", "flatten", "pipe", "flip"]);
 
 function writeSubGraphField(tablename, fieldname) {
     return "<" + tablename + "__" + fieldname + ">" + fieldname;
@@ -12,10 +12,11 @@ function writeTable(tabledata, tablename) {
         "|",
         R.map(
             R.partial(writeSubGraphField, tablename),
-            R.sortBy(
-                function(n) {
-                    if (n == 'id') { return 'a' + n; }
-                    return 'b' + n;
+            R.sort(
+                function(a, b) {
+                    if (a == 'id') { return -1; }
+                    if (b == 'id') { return 1; }
+                    return 0;
                 },
                 R.keys(tabledata)
             )
@@ -31,13 +32,18 @@ function findLinks(struct) {
     var r = [];
     R.mapObjIndexed(function(table, tablename) {
         return R.mapObjIndexed(function(field, fieldname) {
-            var l;
-            if (field && field.hasOwnProperty('link')) {
-                l = field.link.split(".");
+            var l, target, current = [];
+            target = R.path(['link', 'target'], field);
+            if (target) {
+                l = target.split(".");
                 if (l.length < 2) {
                     l.push("id");
                 }
-                r.push(R.concat([tablename, fieldname], l));
+                current = R.concat([tablename, fieldname], l);
+                if (field.link.hasOwnProperty('diaprops')) {
+                    current.push(field.link.diaprops);
+                }
+                r.push(current);
             }
         }, table);
     }, struct);
@@ -56,10 +62,31 @@ function addLinkFields(struct) {
 }
 
 function writeLink(linkSpec) {
+
+    function asLineProp(v, k) {
+        return k + '=' + v;
+    }
+
+    function sorter(a, b) {
+        if (a < b) { return -1; }
+        return 1;
+    }
+
+    var propsStr = '';
+    if (linkSpec[4]) {
+        propsStr = R.pipe(
+            R.mapObjIndexed(asLineProp),
+            R.values,
+            R.sort(sorter),
+            R.join(', '),
+            R.concat(' ['),
+            R.flip(R.concat)("]")
+        )(linkSpec[4]);
+    }
     return R.join(' -> ', [
         R.join(':', ['struct' + linkSpec[0], linkSpec[0] + '__' + linkSpec[1]]),
         R.join(':', ['struct' + linkSpec[2], linkSpec[2] + '__' + linkSpec[3]])
-    ]);
+    ]) + propsStr;
 }
 
 function getDotSrc(struct) {
@@ -82,11 +109,27 @@ function transform1(struct) {
     }, struct);
 }
 
+function transform2(struct) {
+    return R.mapObjIndexed(function(table) {
+        return R.mapObjIndexed(function(field) {
+            if (typeof R.path(['link'], field) == 'string') {
+                field = R.assocPath(
+                    ['link'],
+                    { target: field.link },
+                    field
+                );
+            }
+            return field;
+        }, table);
+    }, struct);
+}
+
 function transform(struct) {
-    return transform1(struct);
+    return transform2(transform1(struct));
 }
 
 transform.transform1 = transform1;
+transform.transform2 = transform2;
 
 module.exports = {
     writeTable: writeTable,

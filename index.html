@@ -55,7 +55,11 @@ order:
   address: address # Shorter version of a foreign key
 a:
   letter:
-    link: person.name # A foreign key to a specific field
+    link:
+      target: person.name # A foreign key to a specific field
+      diaprops: # Any GraphViz/Dot property allowed in here
+        color: red
+        style: dashed
 b:
   id:
   something:
