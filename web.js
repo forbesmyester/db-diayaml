@@ -28,4 +28,4 @@ function redraw() {
 redraw();
 
 
-editor.getSession().on('change', debounce(redraw, 200));
+editor.getSession().on('change', debounce(redraw, 750));
