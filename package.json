@@ -1,8 +1,8 @@
 {
   "name": "db-diayaml",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "",
-  "main": "index.js",
+  "main": "lib.js",
   "scripts": {
     "test": "eslint test/*.js && eslint index.js web.js lib.js && mocha test/*.js"
   },
@@ -16,9 +16,12 @@
     "command-line-args": "^0.5.9",
     "debounce": "^1.0.0",
     "js-yaml": "^3.3.1",
+    "marked": "^0.3.5",
     "ramda": "^0.16.0",
     "require-parts": "^0.9.9",
     "require-parts-babel": "^0.9.9",
+    "systemjs": "^0.18.9",
+    "systemjs-builder": "^0.13.1",
     "webpack": "^1.10.5"
   },
   "devDependencies": {
