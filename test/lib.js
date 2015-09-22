@@ -5,16 +5,23 @@ var expect = require('expect.js'),
 
 var sample1 = {
     person: { name: null },
-    order: { owner: { link: { target: "person" } } },
-    a: { letter: { link: { target: "person.name", diaprops: { color: "red" } } } },
+    order: { owner: { links: [{ target: "person" }] } },
+    a: { letter: { links: [{ target: "person.name", diaprops: { color: "red" } }] } },
     b: { something: null }
 };
 
+var sample2 = {
+    person: { name: null },
+    order: { owner: { links: [{ target: "a.something" }, { target: "person" }] } },
+    a: { letter: { links: [{ target: "person.name", diaprops: { color: "red" } }] } },
+    b: { something: null }
+};
 
 describe('lib', function() {
     it('can findLinks', function() {
-        expect(lib.findLinks(sample1)).to.eql(
+        expect(lib.findLinks(sample2)).to.eql(
             [
+                ["order", "owner", "a", "something"],
                 ["order", "owner", "person", "id"],
                 ["a", "letter", "person", "name", { color: "red" }]
             ]
@@ -24,8 +31,8 @@ describe('lib', function() {
     it('can addLinkFields', function() {
         expect(lib.addLinkFields(sample1)).to.eql({
             person: { id: null, name: null },
-            order: { owner: { link: { target: "person" } } },
-            a: { letter: { link: { target: "person.name", diaprops: { color: "red" } } } },
+            order: { owner: { links: [{ target: "person" }] } },
+            a: { letter: { links: [{ target: "person.name", diaprops: { color: "red" } }] } },
             b: { something: null }
         });
     });
@@ -49,14 +56,24 @@ describe('lib', function() {
         );
     });
 
-    it('transform1 will add a link field if just plain text', function() {
+    it('transform1 will add a series links field if just plain text', function() {
 
         expect(lib.transform.transform1({
             person: { name: null },
             b: { something: "person" }
         })).to.eql({
             person: { name: null },
-            b: { something: { link: "person" } }
+            b: { something: { links: ["person"] } }
+        });
+
+        expect(lib.transform.transform1({
+            person: { name: null },
+            car: { model: null },
+            b: { something: "person, car" }
+        })).to.eql({
+            person: { name: null },
+            car: { model: null },
+            b: { something: { links: ["person", "car"] } }
         });
 
     });
@@ -65,18 +82,18 @@ describe('lib', function() {
 
         expect(lib.transform.transform1({
             person: { name: null },
-            b: { something: { link: { target: "person" } } }
+            b: { something: { links: [{ target: "person" }] } }
         })).to.eql({
             person: { name: null },
-            b: { something: { link: { target: "person" } } }
+            b: { something: { links: [{ target: "person" }] } }
         });
 
         expect(lib.transform.transform1({
             person: { name: null },
-            b: { something: { link: "person" } }
+            b: { something: { links: ["person"] } }
         })).to.eql({
             person: { name: null },
-            b: { something: { link: "person" } }
+            b: { something: { links: ["person"] } }
         });
 
     });
@@ -85,10 +102,10 @@ describe('lib', function() {
 
         expect(lib.transform.transform2({
             person: { name: null },
-            b: { something: { link: "person" } }
+            b: { something: { links: ["person"], link: "x" } }
         })).to.eql({
             person: { name: null },
-            b: { something: { link: { target: "person" } } }
+            b: { something: { links: [{ target: "person" }, { target: "x" }] } }
         });
     });
 
@@ -96,12 +113,38 @@ describe('lib', function() {
 
         expect(lib.transform.transform2({
             person: { name: null },
-            b: { something: { link: { target: "person" } } }
+            b: { something: { links: [{ target: "person" }] } }
         })).to.eql({
             person: { name: null },
-            b: { something: { link: { target: "person" } } }
+            b: { something: { links: [{ target: "person" }] } }
         });
 
+    });
+
+    it('can do problematic tranform', function() {
+        var sample = {
+            "person": {"name":null},
+            "address": {"line1":null,"line2":null,"person":{"link":"person"}},
+            "order": {"address":"address"},
+            "a": {
+                "letter": {"link": {
+                    "target": "person.name",
+                    "diaprops" :{
+                        "color": "red",
+                        "style": "dashed",
+                        "label": "<&nbsp;this is<font color=\"blue\"><b> very </b>different</font>>",
+                        "arrowhead": "open",
+                        "arrowtail": "vee",
+                        "dir": "both"
+                    }
+                }},
+                "number": {"link": "b"}
+            },
+            "b": {
+                "id": null,
+                "has_address": "address.id"
+            }
+        }
     });
 
     it('can writeDatabase', function() {

@@ -32,19 +32,19 @@ function findLinks(struct) {
     var r = [];
     R.mapObjIndexed(function(table, tablename) {
         return R.mapObjIndexed(function(field, fieldname) {
-            var l, target, current = [];
-            target = R.path(['link', 'target'], field);
-            if (target) {
-                l = target.split(".");
+            var l, links, current = [];
+            links = R.defaultTo([], R.path(['links'], field));
+            R.map(function(link) {
+                l = link.target.split(".");
                 if (l.length < 2) {
                     l.push("id");
                 }
                 current = R.concat([tablename, fieldname], l);
-                if (field.link.hasOwnProperty('diaprops')) {
-                    current.push(field.link.diaprops);
+                if (link.hasOwnProperty('diaprops')) {
+                    current.push(link.diaprops);
                 }
                 r.push(current);
-            }
+            }, links);
         }, table);
     }, struct);
     return r;
@@ -103,7 +103,7 @@ function transform1(struct) {
     return R.mapObjIndexed(function(table) {
         return R.mapObjIndexed(function(field) {
             if (typeof field == 'string') {
-                return { link: field };
+                return { links: field.split(/, */g) };
             }
             return field;
         }, table);
@@ -111,16 +111,31 @@ function transform1(struct) {
 }
 
 function transform2(struct) {
+
+    function getNewVal(link) {
+            if (typeof link == 'string') {
+                return { target: link };
+            }
+            return link;
+    }
+
     return R.mapObjIndexed(function(table) {
         return R.mapObjIndexed(function(field) {
-            if (typeof R.path(['link'], field) == 'string') {
-                field = R.assocPath(
-                    ['link'],
-                    { target: field.link },
-                    field
-                );
+            if (field === null) { return null; }
+            var r = R.assocPath(
+                ['links'],
+                R.map(
+                    getNewVal,
+                    R.defaultTo([], R.path(['links'], field))
+                ),
+                field
+            );
+            if (field.hasOwnProperty('link')) {
+                if (!r.links) { r.links = []; }
+                r.links.push(getNewVal(r.link));
+                delete r.link;
             }
-            return field;
+            return r;
         }, table);
     }, struct);
 }
