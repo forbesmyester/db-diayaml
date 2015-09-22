@@ -55,18 +55,16 @@ order:
   address: address # Shorter version of a foreign key
 a:
   letter:
-    link:
-      target: person.name # A foreign key to a specific field
-      diaprops: # Any GraphViz/Dot property allowed in here
-        color: red
-        style: dashed
-        label: &lt;&amp;nbsp;this is&lt;font color="blue"&gt;&lt;b&gt; very &lt;/b&gt;different&lt;/font&gt;&gt; # Special HTML string (plain text possible)
-        arrowhead: open
-        arrowtail: vee
-        dir: both
-  number:
-    link: b
-b:
+    links:
+      - target: person.name # A foreign key to a specific field
+        diaprops: # Any GraphViz/Dot property allowed in here
+          color: red
+          style: dashed
+          label: &lt;&amp;nbsp;this is&lt;font color="blue"&gt;&lt;b&gt; very &lt;/b&gt;different&lt;/font&gt;&gt; # Special HTML string (plain text possible)
+          arrowhead: open
+          arrowtail: vee
+      - business
+business:
   id:
   has_address: address.id
 
