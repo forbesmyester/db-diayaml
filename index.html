@@ -53,11 +53,14 @@ address:
     link: person
 order:
   address: address # Shorter version of a foreign key
+  pizzas!:
+  beers!:
+  more beers!:
 a:
   letter:
-    links: # You can use links to get multiple link
+  links:  # You can use links to get multiple links instead of just one
       - target: person.name # A foreign key to a specific field
-        diaprops: # Any GraphViz/Dot property allowed in here
+        diaprops:           # Any GraphViz/Dot property allowed in here however no escaping is done within diaprops, so be careful!
           color: red
           style: dashed
           label: &lt;&amp;nbsp;this is&lt;font color="blue"&gt;&lt;b&gt; very &lt;/b&gt;different&lt;/font&gt;&gt; # Special HTML string (plain text possible)

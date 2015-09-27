@@ -18,6 +18,9 @@ function redraw() {
         document.getElementById("diagram").innerHTML = '<div class="error"><h2>Error</h2><p>Your YAML does not appear to be valid</p></div>';
         return;
     }
+    if (console && console.log) {
+        console.log("RENDERING: ", lib.getDotSrc(lib.transform(json)).join("\n"));
+    }
     /* eslint new-cap: 0 */
     document.getElementById("diagram").innerHTML = Viz(
         lib.getDotSrc(lib.transform(json)).join("\n"),

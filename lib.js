@@ -2,12 +2,22 @@
 
 var R = require('require-parts')('ramda', 'src', ["partial", "map", "sort", "keys", "mapObjIndexed", "concat", "values", "assocPath", "reduce", "slice", "path", "defaultTo", "join", "flatten", "pipe", "flip"]);
 
+function structEscape(s) {
+    return s.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+function stringEscape(s) {
+    return s.replace(/[^a-zA-Z0-9]/g, function(match) {
+        return "\\" + match;
+    });
+}
+
 function writeSubGraphField(tablename, fieldname) {
-    return "<" + tablename + "__" + fieldname + ">" + fieldname;
+    return "<" + structEscape(tablename) + "__" + structEscape(fieldname) + ">" + stringEscape(fieldname);
 }
 
 function writeTable(tabledata, tablename) {
-    var lines = ["subgraph cluster" + tablename + " {"];
+    var lines = ["subgraph cluster" + structEscape(tablename) + " {"];
     var fields = R.join(
         "|",
         R.map(
@@ -22,8 +32,8 @@ function writeTable(tabledata, tablename) {
             )
         )
     );
-    lines.push('  label = "' + tablename + '";');
-    lines.push('  struct' + tablename + ' [label="{' + fields + '}",shape=record];');
+    lines.push('  label = "' + stringEscape(tablename) + '";');
+    lines.push('  struct' + structEscape(tablename) + ' [label="{' + fields + '}",shape=record];');
     lines.push("}");
     return lines;
 }
@@ -84,8 +94,8 @@ function writeLink(linkSpec) {
         )(linkSpec[4]);
     }
     return R.join(' -> ', [
-        R.join(':', ['struct' + linkSpec[0], linkSpec[0] + '__' + linkSpec[1]]),
-        R.join(':', ['struct' + linkSpec[2], linkSpec[2] + '__' + linkSpec[3]])
+        R.join(':', ['struct' + structEscape(linkSpec[0]), structEscape(linkSpec[0]) + '__' + structEscape(linkSpec[1])]),
+        R.join(':', ['struct' + structEscape(linkSpec[2]), structEscape(linkSpec[2]) + '__' + structEscape(linkSpec[3])])
     ]) + propsStr;
 }
 
