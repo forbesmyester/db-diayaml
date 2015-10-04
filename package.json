@@ -1,6 +1,6 @@
 {
   "name": "db-diayaml",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "",
   "main": "lib.js",
   "scripts": {
