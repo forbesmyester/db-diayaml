@@ -9,7 +9,7 @@ if [[ "$1" == "web" ]]; then
     git checkout gh-pages
     git pull
     mv ../index.html ../web.bin.js ../viz-v1.*.js ./
-    git add index.html web.bin.js ../viz-v1.*.js ./
+    git add index.html web.bin.js viz-v1.*.js ./
     git commit -m 'relaunch gh-pages'
     git push
     git checkout master
