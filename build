@@ -5,11 +5,11 @@ if [[ "$1" == "web" ]]; then
     git add web.bin.js
     git commit -m 'js binary'
     rm web.webpack.js
-    cp index.html web.bin.js ..
+    cp index.html web.bin.js viz-v1.*.js ../
     git checkout gh-pages
     git pull
-    mv ../index.html ../web.bin.js ./
-    git add index.html web.bin.js
+    mv ../index.html ../web.bin.js ../viz-v1.*.js ./
+    git add index.html web.bin.js ../viz-v1.*.js ./
     git commit -m 'relaunch gh-pages'
     git push
     git checkout master
