@@ -18,6 +18,7 @@ var sample2 = {
 };
 
 describe('lib', function() {
+
     it('can findLinks', function() {
         expect(lib.findLinks(sample2)).to.eql(
             [
@@ -119,32 +120,6 @@ describe('lib', function() {
             b: { something: { links: [{ target: "person" }] } }
         });
 
-    });
-
-    it('can do problematic tranform', function() {
-        var sample = {
-            "person": {"name":null},
-            "address": {"line1":null,"line2":null,"person":{"link":"person"}},
-            "order": {"address":"address"},
-            "a": {
-                "letter": {"link": {
-                    "target": "person.name",
-                    "diaprops" :{
-                        "color": "red",
-                        "style": "dashed",
-                        "label": "<&nbsp;this is<font color=\"blue\"><b> very </b>different</font>>",
-                        "arrowhead": "open",
-                        "arrowtail": "vee",
-                        "dir": "both"
-                    }
-                }},
-                "number": {"link": "b"}
-            },
-            "b": {
-                "id": null,
-                "has_address": "address.id"
-            }
-        }
     });
 
     it('can writeDatabase', function() {
