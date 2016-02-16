@@ -1,10 +1,11 @@
 "use strict";
 
 /* eslint-env browser */
-/* global ace, Viz, jsyaml */
+/* global ace, Viz */
 
 var lib = require('./lib.js'),
-    debounce = require('debounce');
+    debounce = require('debounce'),
+    jsyaml = require('js-yaml');
 
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
